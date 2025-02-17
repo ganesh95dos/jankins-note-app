@@ -1,29 +1,48 @@
 pipeline {
     agent any
-    stages{
-        stage("Clone Code"){
-            steps{
-                git url: "https://github.com/LondheShubham153/django-notes-app.git", branch: "main"
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello, this is my-django-note-app'
             }
         }
-        stage("Build and Test"){
-            steps{
-                sh "docker build . -t note-app-test-new"
+        
+        stage('Copy Code') {
+            steps {
+                echo 'Hello, this is copy code'
+                git branch: 'dev', url: 'https://github.com/ganesh95dos/jankins-note-app.git'
+                echo 'Code copied successfully'
             }
         }
-        stage("Push to Docker Hub"){
+        
+        stage('Pull Image from docker'){
             steps{
-                withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
-                sh "docker tag note-app-test-new ${env.dockerHubUser}/note-app-test-new:latest"
-                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                sh "docker push ${env.dockerHubUser}/note-app-test-new:latest"
-                }
+                echo 'Hello, this is pull image from Docker Hub'
+                withCredentials([usernamePassword(
+                    credentialsId:"Jenkins-app-note-django",
+                    passwordVariable:"dockerHubPass",
+                    usernameVariable:"dockerHubUser")]){
+                sh 'docker pull ${env.dockerHubUser}/my-django-note-app:latest'}
             }
         }
-        stage("Deploy"){
-            steps{
-                sh "docker-compose down && docker-compose up -d"
+        
+        stage('Build Code') {
+            steps {
+                echo 'Hello, this is Build code'
+                sh 'whoami'  // Ensure correct spacing around the command
+                sh 'docker build -t my-django-note-app:latest .'  // Corrected spacing
+                sh 'docker images'  // Corrected spacing
+                echo 'Build code successfully'  // Using echo for success message
             }
         }
+        
+        stage('Deploy Code') {
+            steps {
+                sh 'docker-compose up -d'  // Run docker-compose to start containers
+                echo 'Deployed code successfully'  // Using echo to print the success message
+            }
+        }
+        
     }
 }
