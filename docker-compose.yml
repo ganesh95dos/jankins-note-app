@@ -1,4 +1,4 @@
-version: "v3.0"
+version: "v3.3"
 services:
   web:
     image: ganeshmestry21/my-note-app:latest  # Ensure this matches the pushed image
