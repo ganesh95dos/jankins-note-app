@@ -16,17 +16,6 @@ pipeline {
             }
         }
         
-        stage('Pull Image from docker'){
-            steps{
-                echo 'Hello, this is pull image from Docker Hub'
-                withCredentials([usernamePassword(
-                    credentialsId:"Jenkins-app-note-django",
-                    passwordVariable:"dockerHubPass",
-                    usernameVariable:"dockerHubUser")]){
-                sh 'docker pull ${env.dockerHubUser}/my-django-note-app:latest'}
-            }
-        }
-        
         stage('Build Code') {
             steps {
                 echo 'Hello, this is Build code'
@@ -34,6 +23,17 @@ pipeline {
                 sh 'docker build -t my-django-note-app:latest .'  // Corrected spacing
                 sh 'docker images'  // Corrected spacing
                 echo 'Build code successfully'  // Using echo for success message
+            }
+        }
+        
+        stage('Push Image from docker'){
+            steps{
+                echo 'Hello, this is pull image from Docker Hub'
+                withCredentials([usernamePassword(
+                    credentialsId:"Jenkins-app-note-django",
+                    passwordVariable:"dockerHubPass",
+                    usernameVariable:"dockerHubUser")]){
+                sh 'docker push ${env.dockerHubUser}/my-django-note-app:latest'}
             }
         }
         
