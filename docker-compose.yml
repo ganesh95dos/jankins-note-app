@@ -1,7 +1,6 @@
-version: "3.3"
+version: "v1.0"
 services:
   web:
     image: ganeshmestry21/my-note-app:latest  # Ensure this matches the pushed image
     ports:
       - "8000:8000"
-
