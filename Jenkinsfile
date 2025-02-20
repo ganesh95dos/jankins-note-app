@@ -28,12 +28,13 @@ pipeline {
         
         stage('Push Image from docker'){
             steps{
-                echo 'Hello, this is pull image from Docker Hub'
+                echo 'Hello, this is push image from Docker Hub'
                 withCredentials([usernamePassword(
                     credentialsId:"Jenkins-app-note-django",
                     passwordVariable:"dockerHubPass",
                     usernameVariable:"dockerHubUser")]){
                 sh 'docker push ${env.dockerHubUser}/my-django-note-app:latest'}
+                echo 'Hello, this is push image to Docker Hub successfully'
             }
         }
         
