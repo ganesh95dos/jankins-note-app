@@ -4,7 +4,9 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-                echo 'Hello, this is my-django-note-app'
+                script {
+                    hello()
+                }
             }
         }
         
