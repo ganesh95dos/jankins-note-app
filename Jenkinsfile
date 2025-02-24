@@ -2,16 +2,6 @@
 pipeline {
     agent any
 
-   /* stages {
-        stage('hello') {
-            steps {
-                script {
-                    // Call the hello() method from the shared library
-                    echo hello()  // This should print "Hello Dosto"
-                }
-            }
-        }*/
-
         stage('Copy Code') {
             steps {
                 echo 'Hello, this is copy code'
