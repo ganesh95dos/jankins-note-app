@@ -14,9 +14,8 @@ pipeline {
         
         stage('Copy Code') {
             steps {
-                echo 'Hello, this is copying the code'
-                git branch: 'dev', url: 'https://github.com/ganesh95dos/jankins-note-app.git'
-                echo 'Code copied successfully'
+                sh "whoami"
+            clone("https://github.com/ganesh95dos/jankins-note-app.git","dev")
             }
         }
 
