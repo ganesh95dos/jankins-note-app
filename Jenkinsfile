@@ -24,6 +24,7 @@ pipeline {
                 
                 // Remove untagged (dangling) images
                 sh 'docker image prune -f'
+                sh 'docker images'
 
                 echo 'Build code successfully'  // Echo for success message
             }
