@@ -28,7 +28,7 @@ pipeline {
                     passwordVariable: "dockerHubPass",
                     usernameVariable: "dockerHubUser"
                 )]) {
-                    sh 'docker push ${env.dockerHubUser}/my-django-note-app:latest'
+                    sh 'docker push -t ${env.dockerHubUser}/my-django-note-app:latest'
                 }
                 echo 'Hello, this is push image to Docker Hub successfully'
             }
