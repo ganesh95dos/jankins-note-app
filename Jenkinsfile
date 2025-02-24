@@ -1,6 +1,7 @@
 pipeline {
     agent any
 
+    stages {
         stage('Copy Code') {
             steps {
                 echo 'Hello, this is copy code'
@@ -8,7 +9,7 @@ pipeline {
                 echo 'Code copied successfully'
             }
         }
-        
+
         stage('Build Code') {
             steps {
                 echo 'Hello, this is Build code'
@@ -18,19 +19,21 @@ pipeline {
                 echo 'Build code successfully'  // Using echo for success message
             }
         }
-        
-        stage('Push Image from docker'){
-            steps{
+
+        stage('Push Image from Docker') {
+            steps {
                 echo 'Hello, this is push image from Docker Hub'
                 withCredentials([usernamePassword(
-                    credentialsId:"Jenkins-app-note-django",
-                    passwordVariable:"dockerHubPass",
-                    usernameVariable:"dockerHubUser")]){
-                sh 'docker push ${env.dockerHubUser}/my-django-note-app:latest'}
+                    credentialsId: "Jenkins-app-note-django",
+                    passwordVariable: "dockerHubPass",
+                    usernameVariable: "dockerHubUser"
+                )]) {
+                    sh 'docker push ${env.dockerHubUser}/my-django-note-app:latest'
+                }
                 echo 'Hello, this is push image to Docker Hub successfully'
             }
         }
-        
+
         stage('Deploy Code') {
             steps {
                 sh 'docker-compose up -d'  // Run docker-compose to start containers
