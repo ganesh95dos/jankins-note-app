@@ -48,7 +48,8 @@ pipeline {
             steps {
                 echo 'Hello, deploying the code using Docker Compose'
                 // Run docker-compose to start containers in detached mode
-                sh 'docker-compose down && -ddocker-compose up -d'
+                sh 'docker-compose down'  // Stop and remove any existing containers
+                sh 'docker-compose up -d' // Start the containers in detached mode
 
                 echo 'Deployed code successfully'  // Success message
             }
