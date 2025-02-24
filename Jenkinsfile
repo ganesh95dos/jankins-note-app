@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Copy Code') {
             steps {
-                echo 'Hello, this is copy code'
+                echo 'Hello, this is copying the code'
                 git branch: 'dev', url: 'https://github.com/ganesh95dos/jankins-note-app.git'
                 echo 'Code copied successfully'
             }
@@ -12,36 +12,45 @@ pipeline {
 
         stage('Build Code') {
             steps {
-                echo 'Hello, this is Build code'
-                //sh 'docker rmi -f $(docker images -q) || true'  // Remove all images
+                echo 'Hello, this is building the code'
+                // Remove old images to avoid conflicts with new build
+                //sh 'docker rmi -f $(docker images -q) || true'  // This removes all old images
                 
+                // Build the Docker image
                 sh 'docker build -t my-django-note-app:latest .'
-                
+
+                // List images after building
                 sh 'docker images'
-                echo 'Build code successfully'  // Using echo for success message
+
+                echo 'Build code successfully'  // Echo for success message
             }
         }
 
-        stage('Push Image from Docker') {
+        stage('Push Image to Docker Hub') {
             steps {
-                echo 'Hello, this is push image from Docker Hub'
+                echo 'Hello, this is pushing the image to Docker Hub'
                 withCredentials([usernamePassword(
-                    credentialsId: "Jenkins-app-note-django",
-                    passwordVariable: "dockerHubPass",
+                    credentialsId: "Jenkins-app-note-django", 
+                    passwordVariable: "dockerHubPass", 
                     usernameVariable: "dockerHubUser"
                 )]) {
-                // Tag the image first (optional but recommended for proper tagging)
-                sh 'docker tag my-django-note-app:latest ${dockerHubUser}/my-django-note-app:latest'
-                sh 'docker push ${env.dockerHubUser}/my-django-note-app:latest'
+                    // Tagging the image
+                    sh 'docker tag my-django-note-app:latest ${dockerHubUser}/my-django-note-app:latest'
+
+                    // Pushing the image to Docker Hub
+                    sh "docker push ${dockerHubUser}/my-django-note-app:latest"
                 }
-                echo 'Hello, this is push image to Docker Hub successfully'
+                echo 'Hello, this image has been pushed to Docker Hub successfully'
             }
         }
 
         stage('Deploy Code') {
             steps {
-                sh 'docker-compose up -d'  // Run docker-compose to start containers
-                echo 'Deployed code successfully'  // Using echo to print the success message
+                echo 'Hello, deploying the code using Docker Compose'
+                // Run docker-compose to start containers in detached mode
+                sh 'docker-compose up -d'
+
+                echo 'Deployed code successfully'  // Success message
             }
         }
     }
