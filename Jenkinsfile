@@ -13,9 +13,11 @@ pipeline {
         stage('Build Code') {
             steps {
                 echo 'Hello, this is Build code'
-                sh 'whoami'  // Ensure correct spacing around the command
-                sh 'docker build -t my-django-note-app:latest .'  // Corrected spacing
-                sh 'docker images'  // Corrected spacing
+                sh 'docker rmi -f $(docker images -q) || true'  # Remove all images
+                
+                sh 'docker build -t my-django-note-app:latest .'
+                
+                sh 'docker images'
                 echo 'Build code successfully'  // Using echo for success message
             }
         }
