@@ -14,7 +14,7 @@ pipeline {
             steps {
                 echo 'Hello, this is building the code'
                 // Remove old images to avoid conflicts with new build
-                //sh 'docker rmi -f $(docker images -q) || true'  // This removes all old images
+                sh 'docker rmi -f $(docker images -q) || true'  // This removes all old images
                 
                 // Build the Docker image
                 sh 'docker build -t my-django-note-app:latest .'
@@ -48,7 +48,7 @@ pipeline {
             steps {
                 echo 'Hello, deploying the code using Docker Compose'
                 // Run docker-compose to start containers in detached mode
-                sh 'docker-compose up -d'
+                sh 'docker-compose down && -ddocker-compose up -d'
 
                 echo 'Deployed code successfully'  // Success message
             }
