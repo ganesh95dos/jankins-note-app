@@ -13,7 +13,7 @@ pipeline {
         stage('Build Code') {
             steps {
                 echo 'Hello, this is Build code'
-                sh 'docker rmi -f $(docker images -q) || true'  # Remove all images
+                sh 'docker rmi -f $(docker images -q) || true'  // Remove all images
                 
                 sh 'docker build -t my-django-note-app:latest .'
                 
