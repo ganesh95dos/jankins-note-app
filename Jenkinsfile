@@ -21,13 +21,13 @@ pipeline {
 
         stage('Build Code') {
             steps{
-            dockerbuild("notes-app","latest")
+            dockerbuild("my-django-note-app","latest")
             }
         }
 
         stage('Push Image to Docker Hub') {
             steps{
-                dockerpush("dockerHubCreds","notes-app","latest")
+                dockerpush("dockerHubCreds","my-django-note-app","latest")
             }
         }
 
