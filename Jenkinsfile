@@ -1,7 +1,18 @@
+@Library('Shared@main') _
 pipeline {
     agent any
 
     stages {
+        
+        stage('hello') {
+            steps {
+                script {
+                    // Call the hello() method from the shared library
+                    echo hello()  // This should print "Hello Dosto"
+                }
+            }
+        }
+        
         stage('Copy Code') {
             steps {
                 echo 'Hello, this is copying the code'
@@ -24,8 +35,6 @@ pipeline {
                 
                 // Remove untagged (dangling) images
                 sh 'docker image prune -f'
-                sh 'docker images'
-
                 echo 'Build code successfully'  // Echo for success message
             }
         }
