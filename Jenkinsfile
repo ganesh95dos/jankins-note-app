@@ -2,7 +2,7 @@
 pipeline {
     agent any
 
-    stages {
+   /* stages {
         stage('hello') {
             steps {
                 script {
@@ -10,7 +10,7 @@ pipeline {
                     echo hello()  // This should print "Hello Dosto"
                 }
             }
-        }
+        }*/
 
         stage('Copy Code') {
             steps {
