@@ -21,7 +21,7 @@ pipeline {
 
         stage('Build Code') {
             steps{
-            dockerbuild("my-django-note-app","latest")
+            dockerbuild("${DockerHubUser}","my-django-note-app","latest")
             }
         }
 
