@@ -5,11 +5,13 @@ pipeline {
     stages {
         stage('hello') {
             steps {
-                echo hello()
+                script {
+                    // Call the hello() method from the shared library
+                    echo hello()  // This should print "Hello Dosto"
                 }
             }
         }
-        
+
         stage('Copy Code') {
             steps {
                 echo 'Hello, this is copy code'
@@ -46,6 +48,5 @@ pipeline {
                 echo 'Deployed code successfully'  // Using echo to print the success message
             }
         }
-        
     }
 }
