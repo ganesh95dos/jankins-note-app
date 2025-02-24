@@ -13,7 +13,7 @@ pipeline {
         stage('Build Code') {
             steps {
                 echo 'Hello, this is Build code'
-                //sh 'docker rmi -f $(docker images -q) || true'  // Remove all images
+                sh 'docker rmi -f $(docker images -q) || true'  // Remove all images
                 
                 sh 'docker build -t my-django-note-app:latest .'
                 
@@ -31,7 +31,7 @@ pipeline {
                     usernameVariable: "dockerHubUser"
                 )]) {
                 // Tag the image first (optional but recommended for proper tagging)
-                sh 'docker tag my-django-note-app:latest ${dockerHubUser}/my-django-note-app:latest'
+                sh 'docker -t my-django-note-app:latest ${dockerHubUser}/my-django-note-app:latest'
                 sh 'docker push ${env.dockerHubUser}/my-django-note-app:latest'
                 }
                 echo 'Hello, this is push image to Docker Hub successfully'
