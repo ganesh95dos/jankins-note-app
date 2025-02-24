@@ -20,20 +20,8 @@ pipeline {
         }
 
         stage('Build Code') {
-            steps {
-                echo 'Hello, this is building the code'
-                // Remove old images to avoid conflicts with new build
-                //sh 'docker rmi -f $(docker images -q) || true'  // This removes all old images
-                
-                // Build the Docker image
-                sh 'docker build -t my-django-note-app:latest .'
-
-                // List images after building
-                sh 'docker images'
-                
-                // Remove untagged (dangling) images
-                sh 'docker image prune -f'
-                echo 'Build code successfully'  // Echo for success message
+            steps{
+            dockerbuild("notes-app","latest")
             }
         }
 
