@@ -1,10 +1,4 @@
-@Library(name: 'Shared', retriever: modernSCM(
-    scm: [
-        $class: 'GitSCM',
-        branches: [[name: 'refs/heads/main']],  // Ensure this points to the correct branch
-        userRemoteConfigs: [[url: 'https://github.com/ganesh95dos/shared-library.git']]
-    ]
-)) _
+@Library('Shared') _
 pipeline {
     agent any
 
