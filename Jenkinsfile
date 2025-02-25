@@ -21,7 +21,7 @@ pipeline {
         stage('Build Code') {
             steps {
                 script {
-                    dockerbuild("my-django-note-app","latest")
+                    build("my-django-note-app","latest")
                 }
 
             }
