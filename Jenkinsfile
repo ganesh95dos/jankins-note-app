@@ -57,6 +57,7 @@ pipeline {
 
         stage('Deploy Code') {
             steps{
+                sh "docker-compose down"
                 sh "docker-compose up -d"
             }
         }
