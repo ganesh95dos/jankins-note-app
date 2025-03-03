@@ -2,16 +2,7 @@
 pipeline {
     agent any
 
-    stages {        
-        stage('hello') {
-            steps {
-                script {
-                    // Call the hello() method from the shared library
-                    echo hello()  // This should print "Hello Dosto"
-                }
-            }
-        }     
-        
+    stages {            
         stage("Clone Code"){
             steps{
                 clone("https://github.com/ganesh95dos/jankins-note-app.git","dev")
@@ -33,8 +24,7 @@ pipeline {
 
         stage('Deploy Code') {
             steps{
-                sh "docker-compose down"
-                sh "docker-compose up -d"
+                deploy()
             }
         }
     }
