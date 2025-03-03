@@ -11,22 +11,19 @@ pipeline {
                 }
             }
         }     
-        stage('Copy Code') {
-            steps {
-                sh "whoami"
-            clone("https://github.com/ganesh95dos/jankins-note-app.git","dev")
+        
+        stage("Clone Code"){
+            steps{
+                git url: "https://github.com/ganesh95dos/jankins-note-app.git", branch: "dev"
             }
         }
 
-        stage('Build Code') {
-            steps {
-                script {
-                    build("my-django-note-app","latest")
-                }
-
+        stage("Build and Test"){
+            steps{
+                sh "docker build . -t my-django-note-app"
             }
-
         }
+        
         stage('Push Image to Docker Hub') {
             steps {
                 echo 'Hello, this is pushing the image to Docker Hub'
