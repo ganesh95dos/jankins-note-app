@@ -14,7 +14,7 @@ pipeline {
         
         stage("Clone Code"){
             steps{
-                git url: "https://github.com/ganesh95dos/jankins-note-app.git", branch: "dev"
+                clone ("https://github.com/ganesh95dos/jankins-note-app.git","dev"
             }
         }
 
