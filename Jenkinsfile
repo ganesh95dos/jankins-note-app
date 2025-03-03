@@ -20,24 +20,13 @@ pipeline {
 
         stage("Build and Test"){
             steps{
-                sh "docker build . -t my-django-note-app"
+                docker_build("my-django-note-app","latest")
             }
         }
         
-        stage('Push Image to Docker Hub') {
+        stage('Build and Push Image to Docker Hub') {
             steps {
-                echo 'Hello, this is pushing the image to Docker Hub'
-                withCredentials([usernamePassword(
-                    credentialsId: "Jenkins-app-note-django", 
-                    passwordVariable: "dockerHubPass", 
-                    usernameVariable: "dockerHubUser"
-                )]) {
-                    // Tagging the image
-                    sh 'docker tag my-django-note-app:latest ${dockerHubUser}/my-django-note-app:latest'
-
-                    // Pushing the image to Docker Hub
-                    sh "docker push ${dockerHubUser}/my-django-note-app:latest"
-                }
+                build("ganeshmestry21","my-django-note-app","my-django-note-app" )
                 echo 'Hello, this image has been pushed to Docker Hub successfully'
             }
         }
