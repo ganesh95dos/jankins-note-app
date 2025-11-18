@@ -17,6 +17,7 @@ pipeline {
         
         stage('Build and Push Image to Docker Hub') {
             steps {
+                docker images
                 docker_push("my-django-note-app","latest","ganeshmestry21", )
                 echo 'Hello, this image has been pushed to Docker Hub successfully'
             }
