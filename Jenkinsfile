@@ -24,6 +24,7 @@ pipeline {
 
         stage('Deploy Code') {
             steps{
+                
                 deploy()
             }
         }
